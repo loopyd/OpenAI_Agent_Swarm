@@ -34,7 +34,7 @@ jobs:
           cd target_repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Update folder contents from source repository"
+          git add . 
+          git commit -m "Update folder contents from source repository" || echo "No changes to commit, skipping push!"
           git push || echo "No changes to commit, skipping push!"
         
