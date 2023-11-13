@@ -19,7 +19,7 @@ Once you've got docker setup, you can proceed with running:
  docker compose -f "./docker-compose.yml" up -d --build
 ```
 
-from the ``./agnets`` directory of the repository.
+from this directory of the repository.
 
 ## TODOS:
 
