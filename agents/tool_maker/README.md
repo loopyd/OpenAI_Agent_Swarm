@@ -14,7 +14,7 @@ You can invoke the `` agci_toolmaker`` docker container via the docker-cli comma
 docker run --user agent -it  agci_toolmaker /app/scripts/run.sh
 ```
 
-Or better yet, you can browse to [https://127.0.0.1:8989](https://127.0.0.1:8989) (as configured) after you follow the [instructions](../README.md) in the ``/agents`` folder to build the docker compose project and spin up the container.  Here a notebook that you can develop and test Tool Maker on.
+Or better yet, you can browse to [http://127.0.0.1:8989](http://127.0.0.1:8989) (as configured) after you follow the [instructions](../README.md) in the ``/agents`` folder to build the docker compose project and spin up the container.  Here a notebook that you can develop and test Tool Maker on.
 
 > **TIP**: If you need assistance using this tool, pass the ``-h`` or ``--help` `argument in the command.
 
