@@ -4,8 +4,15 @@ This preliminary experiment has to do with getting the OpenAI Assistant endpoint
 
 This function is as-yet undefined.
 
-# Version 1
-run the ```unit_manager.py``` file.
+## Using Tool Maker
+
+Currently, to use toolmaker, you can open the ``HAAStoolmaker`` docker image via the docker-cli command line:
+
+```sh
+docker run --user agent -it HAAStoolmaker /app/scripts/run.sh
+```
+
+> **TIP**: If you need assistance using this tool, pass the ``-h`` or ``--help` `argument in the command.
 
 You will be prompted to define a tool for creation. The assistant will then generate an OpenAI tool compatible JSON schema defining the name of the new function, it's description and the input argument schema. It will proceed to add this tool to the current assistant.
 

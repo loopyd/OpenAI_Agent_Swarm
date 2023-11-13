@@ -1,0 +1,8 @@
+postgres_data/
+redis_data/
+toolmaker_data/
+!toolmaker_data/.gitkeep
+!redis_data/.gitkeep
+!postgres_data/.gitkeep
+*.ipy[nb]
+*.notebook

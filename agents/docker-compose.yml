@@ -1,0 +1,67 @@
+version: '3.8'
+
+volumes:
+  toolmaker_data:
+  postgres_data:
+  redis_data:
+
+networks:
+  hassnet:
+    name: hassnet_network
+
+services:
+  toolmaker:
+    build:
+      context: ./tool_maker
+      dockerfile: Dockerfile
+    container_name: agci_toolmaker
+    restart: always
+    networks:
+      - hassnet
+    ports:
+      - 8989:8989
+    hostname: HAAStoolmaker
+    volumes:
+      - type: bind
+        source: ./tool_maker
+        target: /app
+      - type: bind
+        source: ./data/toolmaker_data
+        target: /data
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - DEBUG_MODE=true
+      - JUPYTER_HOST=0.0.0.0
+      - JUPYTER_PORT=8989
+  redis:
+    image: redis:latest
+    container_name: agci_redis
+    restart: always
+    networks:
+      - hassnet
+    ports:
+      - 6379:6379
+    hostname: redis
+    volumes:
+      - type: bind
+        source: ./data/redis_data
+        target: /data
+  postgres:
+    image: postgres:latest
+    container_name: agci_postgres
+    restart: always
+    networks:
+      - hassnet
+    ports:
+      - 5432:5432
+    hostname: postgres
+    volumes:
+      - type: bind
+        source: ./data/postgres_data
+        target: /data
+    environment:
+      - POSTGRES_USER=agci
+      - POSTGRES_PASSWORD=davidshapiro99
+      - POSTGRES_DB=agci
