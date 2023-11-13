@@ -16,11 +16,7 @@ jobs:
       with:
         repository: '${{ github.repository }}'
         token: ${{ secrets.GITHUB_TOKEN }}
-        path: "${{ github.workspace }}"
-
-    - name: Set Target Path for Other Jobs
-      id: set-target-path
-      run: echo "::set-output name=path::${{ github.workspace }}/"
+        path: "./"
 
   sync:
     needs: checkout-target
@@ -33,11 +29,11 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: 'daveshap/OpenAI_Agent_Swarm'
-        path: '${{ needs.checkout-target.outputs.target-path }}/agents/${{ matrix.subfolder }}'
+        path: './agents/${{ matrix.subfolder }}'
     
     - name: Filter out files that are not needed
       run: |
-        pushd ${{ needs.checkout-target.outputs.target-path }}/agents/${{ matrix.subfolder }}
+        pushd ./agents/${{ matrix.subfolder }}
         ls -lah
         FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --subdirectory-filter agents/${{ matrix.subfolder }} -f -- --all
         ls -lah
@@ -47,7 +43,6 @@ jobs:
     - name: Commit and Push Changes
       run: |
         cd ${{ needs.checkout-target.outputs.target-path }}/
-        ls -lah
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
