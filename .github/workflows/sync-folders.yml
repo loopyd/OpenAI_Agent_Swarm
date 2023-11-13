@@ -29,7 +29,7 @@ jobs:
         repository: 'daveshap/OpenAI_Agent_Swarm'
         path: 'source'
     
-    - name: Filter out files that are not needed
+    - name: Filter out files, merge, and push
       run: |
         pushd source
         FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --subdirectory-filter ${{ matrix.subfolder }} -f -- --all
@@ -39,6 +39,7 @@ jobs:
         mkdir -p target/${{ matrix.subfolder }}
         mv -f source/* target/${{ matrix.subfolder }}
         pushd target
+        las -lah
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
