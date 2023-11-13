@@ -45,7 +45,8 @@ jobs:
 
     - name: Commit and Push Changes
       run: |
-        cd ${{ needs.checkout-target.outputs.target-path }}
+        cd ${{ needs.checkout-target.outputs.target-path }}/
+        ls -lah
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
