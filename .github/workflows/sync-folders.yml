@@ -45,8 +45,10 @@ jobs:
 
     - name: Commit and Push Changes
       run: |
+        pushd target
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
         git commit -m "Update folder contents from source repository"
         git push
+        popd
