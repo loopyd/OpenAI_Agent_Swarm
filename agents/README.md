@@ -15,7 +15,7 @@ To get started, you'll need the Docker Engine / Docker Desktop client set up on 
 Once you've got docker setup, you can proceed with running:
 
 ```bash
-docker-compose -up -d --build
+ docker compose -f "./docker-compose.yml" up -d --build
 ```
 
 from the ``./agnets`` directory of the repository.
