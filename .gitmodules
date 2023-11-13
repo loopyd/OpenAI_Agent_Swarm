@@ -1,4 +1,0 @@
-[submodule "agents/tool_maker"]
-	path = agents/tool_maker
-	url = https://github.com/loopyd/OpenAI_Agent_Swarm.git
-	branch = tool_maker
