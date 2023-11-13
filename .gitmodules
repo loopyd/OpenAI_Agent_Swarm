@@ -1,0 +1,16 @@
+[submodule "agents/gpts"]
+	path = agents/gpts
+	url = https://github.com/loopyd/OpenAI_Agent_Swarm.git
+	branch = gpts
+[submodule "agents/tool_maker"]
+	path = agents/tool_maker
+	url = https://github.com/loopyd/OpenAI_Agent_Swarm.git
+	branch = tool_maker
+[submodule "agents/agent_functions"]
+	path = agents/agent_functions
+	url = https://github.com/loopyd/OpenAI_Agent_Swarm.git
+	branch = agent_functions
+[submodule "agents/agent_builder"]
+	path = agents/agent_builder
+	url = https://github.com/loopyd/OpenAI_Agent_Swarm.git
+	branch = agent_builder
