@@ -10,6 +10,9 @@ usage() {
     printf "Usage: %s [options]\n\n" "$0"
     printf "  %-25s%-35s%s\n" "Short, Long" "Description" "Environment Variable"
     printf "  %-25s%-35s%s\n" "-h, --help" "Show this help message and exit" "n/a"
+    printf "  %-25s%-35s%s\n" "-d, --debug" "Enable debug mode" "DEBUG"
+    printf "  %-25s%-35s%s\n" "-i, --jupyter-host" "Jupyter development host" "JUPYTER_HOST"
+    printf "  %-25s%-35s%s\n" "-p, --jupyter-port" "Jupyter development port" "JUPYTER_PORT"
     exit 1
 }
 
@@ -30,7 +33,7 @@ parse_args() {
         -d | --debug)
             set -x
             if [ -z "$DEBUG" ]; then
-                export DEBUG=1
+                export DEBUG=false
             else
                 echo "W: Debug mode is already set by environment variable: DEBUG" >&2
             fi
@@ -60,16 +63,39 @@ parse_args() {
             fi
             shift 2
             ;;
+        --)
+            shift
+            break
+            ;;
         *)
-            echo "E: Invalid option: $1" >&2
+            echo "E: Invalid option: " >&2
             exit 1
             ;;
         esac
     done
+    if [ -z "$DEBUG" ]; then
+        export DEBUG=false
+        echo "W: Debug mode is not set, defaulting to: DEBUG=$DEBUG" >&2
+    fi
+    if [[ "$DEBUG" == "true" ]] && [ -z "$JUPYTER_HOST" ]; then
+        echo "W: -d | --debug (DEBUG) expects -i | --jupyter-host-ip (JUPYTER_HOST), but none was provided" >&2
+        exit 1
+    fi
+    if [[ "$DEBUG" == "true" ]] && [ -z "$JUPYTER_PORT" ]; then
+        echo "E: -d | --debug (DEBUG) expects -p | --jupyter-port (JUPYTER_PORT), but none was provided" >&2
+        exit 1
+    fi
 }
+
+parse_args "$@"
 
 # Set the current directory to the directory of this script
 export BACKUP_PYTHONPATH=$PYTHONPATH
 export PYTHONPATH=$PYTHONPATH:$(pwd)
-jupyter lab --ip=$JUPYTER_HOST --port $JUPYTER_PORT --allow-root --NotebookApp.custom_display_url=http://127.0.0.1:$JUPYTER_PORT
+
+if [ "$DEBUG" = true ]; then
+    echo "I: Debug mode is enabled, starting the jupyter lab..."
+    jupyter lab --ip=$JUPYTER_HOST --port $JUPYTER_PORT --allow-root --NotebookApp.custom_display_url=http://127.0.0.1:$JUPYTER_PORT
+fi
+
 export PYTHONPATH=$BACKUP_PYTHONPATH
