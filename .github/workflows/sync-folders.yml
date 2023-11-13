@@ -30,7 +30,7 @@ jobs:
         for folder in "${{ matrix.subfolder }}"; do
           rm -rfv target_repo/$folder
           mkdir -pv target_repo/$folder
-          mv -fv source_repo/$folder target_repo/$folder
+          mv -fv source_repo/$folder/* target_repo/$folder
         done
         cd target_repo
         git config --local user.email "action@github.com"
