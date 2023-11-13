@@ -14,3 +14,7 @@
 	path = agents/agent_builder
 	url = https://github.com/loopyd/OpenAI_Agent_Swarm.git
 	branch = agent_builder
+[submodule "DEMOS/fastapi/docker/tool_maker/src"]
+	path = DEMOS/fastapi/docker/tool_maker/src
+	url = https://github.com/loopyd/OpenAI_Agent_Swarm.git
+	branch = tool_maker
