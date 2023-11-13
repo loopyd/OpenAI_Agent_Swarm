@@ -16,10 +16,11 @@ jobs:
       with:
         repository: '${{ github.repository }}'
         token: ${{ secrets.GITHUB_TOKEN }}
+        path: "${{ github.workspace }}"
 
     - name: Set Target Path for Other Jobs
       id: set-target-path
-      run: echo "::set-output name=path::$(pwd)"
+      run: echo "::set-output name=path::${{ github.workspace }}/"
 
   sync:
     needs: checkout-target
