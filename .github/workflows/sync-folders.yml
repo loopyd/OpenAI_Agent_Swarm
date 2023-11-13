@@ -28,7 +28,7 @@ jobs:
     - name: Sync Subfolders
       run: |
         for folder in "${{ matrix.subfolder }}"; do
-          rsync -a "source_repo/$folder/" "target_repo/$folder/"
+          mv -fv "source_repo/$folder/" "target_repo/$folder/"
         done
         cd target_repo
         git config --local user.email "action@github.com"
