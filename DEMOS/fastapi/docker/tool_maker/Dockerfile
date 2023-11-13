@@ -22,7 +22,7 @@ RUN apt-get update && \
 WORKDIR /app
 COPY ./src .
 COPY ./pyproject.toml .
-COPY ./pyproject.tml ./pyproject.lock.tomp
+COPY ./pyproject.toml ./pyproject.lock.toml
 
 
 ENV POETRY_VERSION=1.2.0
