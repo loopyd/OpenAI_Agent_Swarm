@@ -14,8 +14,8 @@ jobs:
       with:
         repository: ${{ github.repository }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        path: ${{ github.workspace }}/../
-        
+        path: ${{ github.workspace }}
+
   sync:
     needs: checkout-target
     runs-on: ubuntu-latest
@@ -31,14 +31,13 @@ jobs:
     
     - name: Filter out files, merge, and push
       run: |
-        pushd "${{ github.workspace }}/${{ matrix.subfolder }}"
+        cd "${{ github.workspace }}/${{ matrix.subfolder }}"
         FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --subdirectory-filter ${{ matrix.subfolder }} -f -- --all
         rm -rf .git
-        popd
-        pushd "${{ github.workspace }}/"
+        cd "${{ github.workspace }}"
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
         git commit -m "Update folder contents from source repository"
         git push
-        popd
+        
