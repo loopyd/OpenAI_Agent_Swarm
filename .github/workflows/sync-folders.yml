@@ -12,10 +12,10 @@ jobs:
     - name: Checkout Target Repository
       uses: actions/checkout@v4
       with:
-        repository: '${{ github.repository }}'
+        repository: ${{ github.repository }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        path: "${{ github.workspace }}/"
-
+        path: ${{ github.workspace }}/../
+        
   sync:
     needs: checkout-target
     runs-on: ubuntu-latest
