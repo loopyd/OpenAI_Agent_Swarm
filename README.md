@@ -4,19 +4,8 @@ This preliminary experiment has to do with getting the OpenAI Assistant endpoint
 
 This function is as-yet undefined.
 
-## Using Tool Maker
-
-Currently, to use toolmaker, you have a few options.
-
-You can invoke the `` agci_toolmaker`` docker container via the docker-cli command line:
-
-```sh
-docker run --user agent -it  agci_toolmaker /app/scripts/run.sh
-```
-
-Or better yet, you can browse to [http://127.0.0.1:8989](http://127.0.0.1:8989) (as configured) after you follow the [instructions](../README.md) in the ``/agents`` folder to build the docker compose project and spin up the container.  Here a notebook that you can develop and test Tool Maker on.
-
-> **TIP**: If you need assistance using this tool, pass the ``-h`` or ``--help` `argument in the command.
+# Version 1
+run the ```unit_manager.py``` file.
 
 You will be prompted to define a tool for creation. The assistant will then generate an OpenAI tool compatible JSON schema defining the name of the new function, it's description and the input argument schema. It will proceed to add this tool to the current assistant.
 
