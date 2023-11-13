@@ -12,7 +12,7 @@ networks:
 services:
   toolmaker:
     build:
-      context: ./tool_maker
+      context: ./docker/tool_maker
       dockerfile: Dockerfile
     container_name: agci_toolmaker
     restart: always
@@ -23,10 +23,10 @@ services:
     hostname: HAAStoolmaker
     volumes:
       - type: bind
-        source: ./tool_maker
+        source: ./docker/tool_maker
         target: /app
       - type: bind
-        source: ./data/toolmaker_data
+        source: ./docker/data/toolmaker_data
         target: /data
     depends_on:
       - redis
@@ -46,7 +46,7 @@ services:
     hostname: redis
     volumes:
       - type: bind
-        source: ./data/redis_data
+        source: ./docker/data/redis_data
         target: /data
   postgres:
     image: postgres:latest
@@ -59,7 +59,7 @@ services:
     hostname: postgres
     volumes:
       - type: bind
-        source: ./data/postgres_data
+        source: ./docker/data/postgres_data
         target: /data
     environment:
       - POSTGRES_USER=agci
