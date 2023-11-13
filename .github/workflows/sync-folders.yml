@@ -22,8 +22,8 @@ jobs:
           path: source_repo
       - name: Sync Subfolders
         run: |
-          search_dirs=("shared", "agents")
-          for subfolder in "$search_dirs[@]"; do
+          search_dirs=("shared" "agents")
+          for subfolder in "${search_dirs[@]}"; do
             echo -e "Syncing $subfolder..."
             rm -rfv target_repo/$subfolder || echo "No existing folder to remove" && continue
             mkdir -pv target_repo/$subfolder
