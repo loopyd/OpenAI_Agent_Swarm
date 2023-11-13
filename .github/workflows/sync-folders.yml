@@ -8,8 +8,6 @@ on:
 jobs:
   checkout-target:
     runs-on: ubuntu-latest
-    outputs:
-      target-path: ${{ steps.set-target-path.outputs.path }}
     steps:
     - name: Checkout Target Repository
       uses: actions/checkout@v4
@@ -37,15 +35,9 @@ jobs:
         FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --subdirectory-filter ${{ matrix.subfolder }} -f -- --all
         rm -rf .git
         popd
-
-    - name: Replace folder on source with filtered folder
-      run: |
         rm -rf target/${{ matrix.subfolder }}
         mkdir -p target/${{ matrix.subfolder }}
         mv -f source/* target/${{ matrix.subfolder }}
-
-    - name: Commit and Push Changes
-      run: |
         pushd target
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
