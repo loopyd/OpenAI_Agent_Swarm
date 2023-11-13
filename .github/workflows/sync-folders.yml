@@ -6,42 +6,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  get-repos:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Target Repository
-      uses: actions/checkout@v4
-      with:
-        repository: ${{ github.repository }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        path: target_repo
-    - name: Checkout Source Repository
-      uses: actions/checkout@v4
-      with:
-        repository: 'daveshap/OpenAI_Agent_Swarm'
-        path: source_repo
   sync-repos:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        subfolder: ['agents/agent_builder', 'agents/agent_functions', 'agents/tool_maker', 'agents/gpts']
-    needs: [ "get-repos" ]
     steps:
-    - name: Sync Subfolders
-      run: |
-        rm -rfv target_repo/${{ matrix.subfolder }}
-        mkdir -pv target_repo/${{ matrix.subfolder }}
-        mv -fv source_repo/${{ matrix.subfolder }}/* target_repo/${{ matrix.subfolder }}
-  push-changes:
-    runs-on: ubuntu-latest
-    needs: [ "sync-repos", "get-repos" ]
-    steps:
-    - name: Push Changes
-      run:
-        cd target_repo
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Update folder contents from source repository"
-        git push || echo "No changes to commit, skipping push!"
+      - name: Checkout Target Repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: target_repo
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'daveshap/OpenAI_Agent_Swarm'
+          path: source_repo
+      - name: Sync Subfolders
+        run: |
+          search_dirs=("shared", "agents")
+          for subfolder in "$search_dirs[@]"; do
+            if [ -d "source_repo/${subfolder}" ]; then
+              echo "Syncing $subfolder ..."
+              rsync -av --delete source_repo/${subfolder} target_repo/${subfolder} || echo "No changes to syncronize for $subfolder"
+            fi
+          done
+      - name: Push Changes
+        run: |
+          cd target_repo
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update folder contents from source repository"
+          git push || echo "No changes to commit, skipping push!"
         
