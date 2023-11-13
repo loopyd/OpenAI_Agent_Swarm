@@ -41,7 +41,7 @@ jobs:
     - name: Replace folder on source with filtered folder
       run: |
         rm -rf target/${{ matrix.subfolder }}
-        mv -rf source/* target/${{ matrix.subfolder }}
+        mv -f source/* target/${{ matrix.subfolder }}
 
     - name: Commit and Push Changes
       run: |
