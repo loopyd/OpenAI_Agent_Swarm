@@ -24,10 +24,10 @@ jobs:
         run: |
           search_dirs=("shared", "agents")
           for subfolder in "$search_dirs[@]"; do
-            if [ -d "source_repo/${subfolder}" ]; then
-              echo "Syncing $subfolder ..."
-              rsync -av --delete source_repo/${subfolder} target_repo/${subfolder} || echo "No changes to syncronize for $subfolder"
-            fi
+            echo -e "Syncing $subfolder..."
+            rm -rfv target_repo/$subfolder || echo "No existing folder to remove" && continue
+            mkdir -pv target_repo/$subfolder
+            mv -fv source_repo/$subfolder/* target_repo/$subfolder
           done
       - name: Push Changes
         run: |
