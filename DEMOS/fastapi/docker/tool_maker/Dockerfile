@@ -24,7 +24,6 @@ COPY ./src .
 COPY ./pyproject.toml .
 COPY ./pyproject.toml ./pyproject.lock.toml
 
-
 ENV POETRY_VERSION=1.2.0
 ENV POETRY_HOME=/opt/poetry
 
@@ -35,12 +34,12 @@ RUN mkdir -p /opt/poetry; \
     poetry config virtualenvs.create false
 
 # Allow installing dev dependencies to run tests
-ARG DEBUG_MODE=false
-ENV DEBUG_MODE=${DEBUG_MODE}
+ARG DEBUG
+ENV DEBUG=${DEBUG}
 
 WORKDIR /app
 
-RUN if [ "${DEBUG_MODE}" = "true" ] ; then \
+RUN if [ "$DEBUG" = "true" ] ; then \
         poetry install --no-root --no-interaction --no-ansi; \
     else \
         poetry install --no-root --only main  --no-interaction --no-ansi; \

@@ -32,7 +32,7 @@ services:
       - redis
       - postgres
     environment:
-      - DEBUG_MODE=true
+      - DEBUG=true
       - JUPYTER_HOST=0.0.0.0
       - JUPYTER_PORT=8989
   redis:
