@@ -12,10 +12,10 @@ jobs:
       target-path: ${{ steps.set-target-path.outputs.path }}
     steps:
     - name: Checkout Target Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
-        repository: 'loopyd/OpenAI_Agent_Swarm'
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: '${{ github.repository }}'
+        token: ${{ secrets.GITHUB_TOKEN }}
         path: 'my-repo'
 
     - name: Set Target Path for Other Jobs
@@ -30,7 +30,7 @@ jobs:
         subfolder: ['agent_builder', 'agent_functions', 'tool_maker', 'gpts']
     steps:
     - name: Checkout Source Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: 'daveshap/OpenAI_Agent_Swarm'
         branch: 'main'
@@ -43,7 +43,6 @@ jobs:
         git reset --hard
         git clean -df
         rm -rf .git
-        cd ../../../..
 
     - name: Commit and Push Changes
       run: |
