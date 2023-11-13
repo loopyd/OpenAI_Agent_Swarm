@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        subfolder: ['agent_builder', 'agent_functions', 'tool_maker', 'gpts']
+        subfolder: ['agents/agent_builder', 'agents/agent_functions', 'agents/tool_maker', 'agents/gpts']
     steps:
     - name: Checkout Source Repository
       uses: actions/checkout@v4
@@ -34,13 +34,14 @@ jobs:
     - name: Filter out files that are not needed
       run: |
         pushd source
-        FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --subdirectory-filter agents/${{ matrix.subfolder }} -f -- --all
+        FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --subdirectory-filter ${{ matrix.subfolder }} -f -- --all
         rm -rf .git
         popd
 
     - name: Replace folder on source with filtered folder
       run: |
         rm -rf target/${{ matrix.subfolder }}
+        mkdir -p target/${{ matrix.subfolder }}
         mv -f source/* target/${{ matrix.subfolder }}
 
     - name: Commit and Push Changes
