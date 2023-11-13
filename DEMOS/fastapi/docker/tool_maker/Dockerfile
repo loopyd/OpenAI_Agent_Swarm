@@ -18,11 +18,12 @@ RUN apt-get update && \
     apt-get upgrade -y; \
     rm -rf /var/lib/apt/lists/*
 
-# Set the working directory to /app, and copy files
+# Set the working directory to /app
 WORKDIR /app
 COPY ./src .
-COPY ./pyproject.toml ./poetry.lock
-COPY ./pyproject.toml ./pyproject.toml
+COPY ./pyproject.toml .
+COPY ./pyproject.tml ./pyproject.lock.tomp
+
 
 ENV POETRY_VERSION=1.2.0
 ENV POETRY_HOME=/opt/poetry
