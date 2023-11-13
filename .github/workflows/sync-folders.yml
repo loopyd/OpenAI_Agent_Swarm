@@ -39,8 +39,7 @@ jobs:
         pushd ${{ needs.checkout-target.outputs.target-path }}/agents/${{ matrix.subfolder }}
         ls -lah
         FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --subdirectory-filter agents/${{ matrix.subfolder }} -f -- --all
-        git reset --hard
-        git clean -df
+        ls -lah
         rm -rf .git
         popd
 
